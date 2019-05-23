@@ -5,7 +5,7 @@ import os
 import boto3
 import logging
 
-logger = logging.getLogger('secrets')
+logger = logging.getLogger('SecretResolver')
 
 SSM_PREFIX = '[resolve:ssm-secure]'
 SM_PREFIX = '[resolve:secretsmanager]'
@@ -67,5 +67,3 @@ if __name__ == '__main__':
 	args = parse_args()
 	logger.info(args)
 	main(args.variables, args.raise_exceptions)
-
-#logger.info('export TMP_VARIABLE=123')
