@@ -7,6 +7,7 @@ import logging
 
 logger = logging.getLogger('SecretResolver')
 
+# Prefixes for the secrets. These will be used to identify the values intended to be resolved
 SSM_PREFIX = '[resolve:ssm-secure]'
 SM_PREFIX = '[resolve:secretsmanager]'
 
