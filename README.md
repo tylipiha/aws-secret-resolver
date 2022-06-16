@@ -8,7 +8,7 @@ Systems manager parameter store. Should not be needed in cases were
 the injection is provided by AWS, but was required in the past for
 some specific scenarios.
 
-The variables are printed into stdout in the export=... format so that
+The variables are printed into stdout in the export VARIABLE=... format so that
 the can be sourced by the parent process.
 ## Usage
 
