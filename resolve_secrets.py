@@ -28,6 +28,7 @@ SM_PREFIX = '[resolve:secretsmanager]'
 ssm_client = boto3.client('ssm')
 sm_client = boto3.client('secretsmanager')
 
+
 def parse_args():
     """Parse commandline arguments"""
     parser = argparse.ArgumentParser(description='')
@@ -41,9 +42,10 @@ def parse_args():
     return parsed_args
 
 
-def should_resolve(secret_str: str) -> bool:
+def should_resolve(secret_str: Optional[str]) -> bool:
     """Check if given variable name should be resolved"""
-    if secret_str.startswith(SSM_PREFIX) or secret_str.startswith(SM_PREFIX):
+    if secret_str is not None and (secret_str.startswith(
+            SSM_PREFIX) or secret_str.startswith(SM_PREFIX)):
         return True
 
     return False
@@ -96,10 +98,10 @@ def main(secrets_to_parse: List[str], raise_exception: bool):
     """Resolve a specified list of secrets from SSM or SM and print in export format"""
     for secret_key in secrets_to_parse:
         secret_str = os.environ.get(secret_key)
-        if secret_str is not None and should_resolve(secret_str):
-            secret_value = resolve_secret(secret_str, raise_exception)
-            if secret_value is not None:
-                print(f'export {secret_key}={secret_value}')
+        if should_resolve(secret_str):
+            resolved_secret = resolve_secret(secret_str, raise_exception)
+            if resolved_secret is not None:
+                print(f'export {secret_key}={resolved_secret}')
 
 
 if __name__ == '__main__':
